@@ -51,12 +51,14 @@ function shadowTexture() {
 
 async function init() {
   if (!canvas) return;
+  // Weaker phones and data-saver keep the plain photo.
+  if ((navigator.deviceMemory && navigator.deviceMemory < 4) || navigator.connection?.saveData) return;
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
   catch { return; }
   await (document.fonts?.ready ?? Promise.resolve());
 
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 860 ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;

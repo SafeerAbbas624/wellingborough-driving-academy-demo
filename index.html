@@ -18,7 +18,7 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <p class="demo-note">Concept homepage prepared for Wellingborough Driving Academy by Tommaso Sarracino. Not the live website.</p>
+  <p class="demo-note"><span class="long">Concept homepage prepared for Wellingborough Driving Academy by Tommaso Sarracino. Not the live website.</span><span class="short">Concept design by Tommaso Sarracino · not the live site</span></p>
 
   <header class="nav" data-nav>
     <div class="nav__inner">
@@ -37,8 +37,26 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
         <span>01933 226682</span>
       </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
+        <span class="menu-btn__bars" aria-hidden="true"><i></i><i></i></span>
+        <span class="sr-only">Menu</span>
+      </button>
     </div>
   </header>
+  <div class="menu" id="menu" data-menu hidden>
+    <nav aria-label="Mobile">
+      <a href="#prices">Prices</a>
+      <a href="#cars">Our cars</a>
+      <a href="#courses">Courses</a>
+      <a href="#about">About</a>
+      <a href="#book">Contact</a>
+    </nav>
+    <div class="menu__actions">
+      <a class="btn btn--brand btn--lg btn--block" href="#book">Book your first lesson</a>
+      <a class="btn btn--ghost btn--lg btn--block" href="tel:+441933226682">Call 01933 226682</a>
+    </div>
+  </div>
+
 
   <main id="main">
 
@@ -82,7 +100,7 @@
         <p class="section__lead">No surcharges, no holiday extras, no charge for learning in the electric car. Once you start, your hourly rate is locked.</p>
       </div>
 
-      <div class="plans">
+      <div class="plans" data-swipe="plans">
         <article class="plan" data-reveal data-tilt>
           <h3 class="plan__name">Weekday lesson</h3>
           <p class="plan__price"><span>£45</span><small>/ hour</small></p>
@@ -115,16 +133,22 @@
           <a class="btn btn--ghost" href="#book">Ask about a time</a>
         </article>
       </div>
+      <div class="dots" data-dots-for="plans" aria-hidden="true"></div>
 
       <!-- The planner -->
       <form class="planner" data-planner aria-labelledby="planner-h" action="mailto:info@wellingboroughdrivingacademy.com" method="post" enctype="text/plain" data-reveal>
         <div class="planner__inputs">
+          <div class="planner__live" data-live aria-hidden="true"><span data-live-hours>22 hours</span><strong data-live-total>£900.00</strong></div>
           <h3 id="planner-h" class="planner__title">Plan your lessons</h3>
           <p class="planner__intro">Move the slider to see what your lessons will cost.</p>
 
           <label class="planner__field">
             <span class="planner__label">How many hours? <output class="planner__hours" data-hours-out>22 hours</output></span>
-            <input class="range" type="range" name="hours" min="1" max="44" value="22" step="1" data-hours>
+            <span class="stepper">
+              <button type="button" class="stepper__btn" data-step="-1" aria-label="One hour fewer">−</button>
+              <input class="range" type="range" name="hours" min="1" max="44" value="22" step="1" data-hours>
+              <button type="button" class="stepper__btn" data-step="1" aria-label="One hour more">+</button>
+            </span>
             <span class="planner__scale" aria-hidden="true"><span>1</span><span>11</span><span>22</span><span>33</span><span>44</span></span>
           </label>
 
@@ -165,7 +189,7 @@
         <h2 id="cars-h" class="h2">Two modern cars, both dual control</h2>
         <p class="section__lead">Easy to manoeuvre, hard to stall, and packed with safety kit. Pick the one that suits the licence you want.</p>
       </div>
-      <div class="cars__grid">
+      <div class="cars__grid" data-swipe="cars">
         <article class="car" data-reveal data-tilt>
           <div class="car__img"><img src="img/v2-mini-side.webp" width="1200" height="761" loading="lazy" alt="The Academy's silver Mini Electric with yellow mirror caps and the Auto / Electric door sign"></div>
           <div class="car__body">
@@ -185,6 +209,7 @@
           </div>
         </article>
       </div>
+      <div class="dots" data-dots-for="cars" aria-hidden="true"></div>
     </section>
 
     <!-- 3D DROP GALLERY -->
@@ -209,7 +234,7 @@
       <div class="section__head" data-reveal>
         <h2 id="why-h" class="h2">Why learners choose us</h2>
       </div>
-      <div class="why__grid">
+      <div class="why__grid" data-swipe="why">
         <div class="feat" data-reveal>
           <span class="feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10 12 5l9 5-9 5-9-5Z"/><path d="M7 12v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4"/></svg></span>
           <h3>A real classroom</h3>
@@ -231,6 +256,7 @@
           <p>An electric car on the fleet, over 80% of waste recycled, and charity weeks where 10% of profits go to a good cause.</p>
         </div>
       </div>
+      <div class="dots" data-dots-for="why" aria-hidden="true"></div>
     </section>
 
     <!-- ABOUT -->
@@ -286,6 +312,10 @@
         <div class="book__info">
           <h2 id="book-h" class="h2">Book your first lesson</h2>
           <p class="section__lead">Send your details and we’ll call you back to find a time.</p>
+          <div class="callnow">
+            <a class="btn btn--ink btn--lg" href="tel:+441933226682">Call the office</a>
+            <a class="btn btn--ghost btn--lg" href="tel:+447442539858">Call the mobile</a>
+          </div>
           <ul class="contact">
             <li><span>Office</span><a href="tel:+441933226682">01933 226682</a></li>
             <li><span>Mobile</span><a href="tel:+447442539858">07442 539858</a></li>
@@ -307,6 +337,7 @@
       <iframe class="map" title="Map showing 45 Broad Green, Wellingborough NN8 4LH" loading="lazy"
               src="https://www.google.com/maps?q=45+Broad+Green,+Wellingborough+NN8+4LH&amp;z=16&amp;output=embed"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="btn btn--ghost btn--lg map__open" href="https://www.google.com/maps/search/?api=1&amp;query=45+Broad+Green+Wellingborough+NN8+4LH">Open in Google Maps</a>
     </section>
   </main>
 
@@ -323,10 +354,13 @@
     <p class="footer__imprint">© Wellingborough Driving Academy · 45 Broad Green, Wellingborough NN8 4LH · Concept design by Tommaso Sarracino</p>
   </footer>
 
-  <a class="fab" href="tel:+441933226682" aria-label="Call Wellingborough Driving Academy on 01933 226682">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
-    <span>Call</span>
-  </a>
+  <div class="actionbar" data-actionbar>
+    <a class="btn btn--ghost" href="tel:+441933226682" aria-label="Call the office on 01933 226682">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <span>Call</span>
+    </a>
+    <a class="btn btn--brand" href="#book">Book a lesson</a>
+  </div>
 
   <script src="main.js" defer></script>
   <script type="module" src="sign3d.js"></script>

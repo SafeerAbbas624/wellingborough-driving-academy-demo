@@ -6,24 +6,67 @@ const money = (n) => new Intl.NumberFormat('en-GB', { style: 'currency', currenc
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(pointer: fine)').matches;
 
-// Nav shadow once the page moves; floating call button on phones after the hero.
+// Nav shadow once the page moves; phone action bar after the hero, away while the booking form is on screen.
 (() => {
   const nav = document.querySelector('[data-nav]');
-  const fab = document.querySelector('.fab');
+  const bar = document.querySelector('[data-actionbar]');
   const hero = document.querySelector('.hero');
+  const book = document.querySelector('#book');
   const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 8);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  if (fab && hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => fab.classList.toggle('is-on', !e.isIntersecting)).observe(hero);
-    // Step aside where actions already sit, and while a heading passes the bottom of the screen.
-    const near = new Set();
-    const track = (e) => { e.isIntersecting ? near.add(e.target) : near.delete(e.target); };
-    const sync = () => fab.classList.toggle('is-tucked', near.size > 0);
-    const tio = new IntersectionObserver((es) => { es.forEach(track); sync(); }, { rootMargin: '0px 0px -10% 0px' });
-    document.querySelectorAll('.planner__result, .plan .btn, .book, .footer').forEach((el) => tio.observe(el));
-    const hio = new IntersectionObserver((es) => { es.forEach(track); sync(); }, { rootMargin: '-78% 0px 0px 0px' });
-    document.querySelectorAll('.h2, .hero__title').forEach((el) => hio.observe(el));
+  if (bar && hero && book && 'IntersectionObserver' in window) {
+    let inHero = true, inBook = false;
+    const sync = () => bar.classList.toggle('is-on', !inHero && !inBook);
+    new IntersectionObserver(([e]) => { inHero = e.isIntersecting; sync(); }).observe(hero);
+    new IntersectionObserver(([e]) => { inBook = e.isIntersecting; sync(); }, { rootMargin: '0px 0px -30% 0px' }).observe(book);
   }
+})();
+
+// Full-screen menu on smaller screens.
+(() => {
+  const btn = document.querySelector('[data-menu-btn]');
+  const menu = document.querySelector('[data-menu]');
+  if (!btn || !menu) return;
+  const set = (open, viaKeyboard = false) => {
+    btn.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    document.body.classList.toggle('menu-open', open);
+    if (open && viaKeyboard) menu.querySelector('a')?.focus();
+  };
+  btn.addEventListener('click', (ev) => set(menu.hidden, ev.detail === 0));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
+  matchMedia('(min-width: 1081px)').addEventListener('change', (m) => { if (m.matches) set(false); });
+})();
+
+// Swipe rows: dots that follow the scroll and jump on tap.
+(() => {
+  document.querySelectorAll('[data-swipe]').forEach((row) => {
+    const dots = document.querySelector(`[data-dots-for="${row.dataset.swipe}"]`);
+    if (!dots) return;
+    const items = [...row.children];
+    // On phones the featured plan is shown first (CSS order), so list items in visual order.
+    const ordered = () => [...items].sort((a, b) => a.offsetLeft - b.offsetLeft);
+    items.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.type = 'button'; d.tabIndex = -1;
+      d.addEventListener('click', () => {
+        const target = ordered()[i];
+        row.scrollTo({ left: target.offsetLeft - row.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft), behavior: reduce ? 'auto' : 'smooth' });
+      });
+      dots.appendChild(d);
+    });
+    const update = () => {
+      const list = ordered();
+      const center = row.scrollLeft + row.clientWidth / 2;
+      let best = 0, dist = Infinity;
+      list.forEach((el, i) => { const c = el.offsetLeft - row.offsetLeft + el.offsetWidth / 2; const d = Math.abs(c - center); if (d < dist) { dist = d; best = i; } });
+      [...dots.children].forEach((d, i) => d.classList.toggle('is-on', i === best));
+    };
+    row.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    addEventListener('resize', update);
+    update();
+  });
 })();
 
 // Reveal once on entry, staggered within each group.
@@ -86,11 +129,17 @@ const finePointer = matchMedia('(pointer: fine)').matches;
     $('[data-save]').textContent = money(free * rate);
     $('[data-meter-paid]').style.flexBasis = `${(paid / h) * 100}%`;
     $('[data-meter-free]').style.flexBasis = `${(free / h) * 100}%`;
+    $('[data-live-hours]').textContent = `${h} ${h === 1 ? 'hour' : 'hours'} · ${when === 'weekday' ? 'weekdays' : 'eves & weekends'}`;
+    $('[data-live-total]').textContent = money(total);
     const whenText = when === 'weekday' ? 'weekdays' : 'evenings and weekends';
     const body = `Hello,\n\nI'd like to book driving lessons.\n\nHours: ${h}\nWhen: ${whenText}\nCar: ${car}\nEstimate from your website: ${money(total)}\n\nMy name:\nMy phone number:\n\nThank you.`;
     $('[data-plan-mail]').href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Lesson plan: ${h} hours, ${car}`)}&body=${encodeURIComponent(body)}`;
   };
   form.addEventListener('input', update);
+  form.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => {
+    hours.value = Math.min(+hours.max, Math.max(+hours.min, +hours.value + +b.dataset.step));
+    update();
+  }));
   form.addEventListener('submit', (e) => { e.preventDefault(); location.href = $('[data-plan-mail]').href; });
   update();
 })();
