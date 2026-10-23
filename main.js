@@ -1,135 +1,139 @@
-// Wellingborough Driving Academy — concept homepage behaviour.
-// Everything here enhances content that already works without script.
+// Wellingborough Driving Academy — concept homepage v2 behaviour.
+// Everything enhances content that already works without script.
 
 const EMAIL = 'info@wellingboroughdrivingacademy.com';
-const money = (n) => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money = (n) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(n);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(pointer: fine)').matches;
 
-// Reveal once on entry; never leaves content hidden.
+// Nav shadow once the page moves; floating call button on phones after the hero.
 (() => {
-  const targets = document.querySelectorAll('[data-reveal]');
-  if (!('IntersectionObserver' in window)) { targets.forEach((el) => el.classList.add('is-in')); return; }
+  const nav = document.querySelector('[data-nav]');
+  const fab = document.querySelector('.fab');
+  const hero = document.querySelector('.hero');
+  const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  if (fab && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => fab.classList.toggle('is-on', !e.isIntersecting)).observe(hero);
+    // Step aside where actions already sit, and while a heading passes the bottom of the screen.
+    const near = new Set();
+    const track = (e) => { e.isIntersecting ? near.add(e.target) : near.delete(e.target); };
+    const sync = () => fab.classList.toggle('is-tucked', near.size > 0);
+    const tio = new IntersectionObserver((es) => { es.forEach(track); sync(); }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.planner__result, .plan .btn, .book, .footer').forEach((el) => tio.observe(el));
+    const hio = new IntersectionObserver((es) => { es.forEach(track); sync(); }, { rootMargin: '-78% 0px 0px 0px' });
+    document.querySelectorAll('.h2, .hero__title').forEach((el) => hio.observe(el));
+  }
+})();
+
+// Reveal once on entry, staggered within each group.
+(() => {
+  const targets = [...document.querySelectorAll('[data-reveal]')];
+  if (!('IntersectionObserver' in window) || reduce) { targets.forEach((el) => el.classList.add('is-in')); return; }
+  targets.forEach((el) => {
+    const sibs = [...el.parentElement.children].filter((c) => c.hasAttribute('data-reveal'));
+    el.style.transitionDelay = `${Math.min(sibs.indexOf(el), 5) * 80}ms`;
+  });
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   targets.forEach((el) => io.observe(el));
-  window.addEventListener('load', () => setTimeout(() => {
+  addEventListener('load', () => setTimeout(() => {
     targets.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add('is-in'); });
   }, 2500));
-  // Stagger the menu rows.
-  document.querySelectorAll('.menu .item').forEach((el, i) => { el.style.transitionDelay = `${Math.min(i, 9) * 70}ms`; });
 })();
 
-// The sign leaves a stub behind once the hero has scrolled away.
+// 3D tilt on cards (mouse only).
 (() => {
-  const sign = document.querySelector('[data-sign]');
-  const stub = document.querySelector('[data-stub]');
-  if (!sign || !stub || !('IntersectionObserver' in window)) return;
-  new IntersectionObserver(([e]) => stub.classList.toggle('is-on', !e.isIntersecting), { threshold: 0 }).observe(sign);
-  // Tuck it away where the number is already on screen or large text runs along the bottom edge.
-  const tuckers = document.querySelectorAll('#steps, #book, .back');
-  const near = new Set();
-  const tio = new IntersectionObserver((entries) => {
-    entries.forEach((e) => (e.isIntersecting ? near.add(e.target) : near.delete(e.target)));
-    stub.classList.toggle('is-tucked', near.size > 0);
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
-  tuckers.forEach((el) => tio.observe(el));
+  if (!finePointer || reduce) return;
+  document.querySelectorAll('[data-tilt]').forEach((card) => {
+    let raf = 0;
+    card.addEventListener('pointermove', (e) => {
+      if (!card.classList.contains('is-in')) return;
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transitionDelay = '0ms';
+        card.style.transform = `perspective(1000px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+      });
+    });
+    card.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); card.style.transform = ''; });
+  });
 })();
 
-// Live thing: the lesson planner, from the published prices.
+// The lesson planner, from the published prices.
 (() => {
   const form = document.querySelector('[data-planner]');
   if (!form) return;
-  const hours = form.querySelector('[data-hours]');
-  const hoursOut = form.querySelector('[data-hours-out]');
-  const total = form.querySelector('[data-total]');
-  const detail = form.querySelector('[data-detail]');
-  const mail = form.querySelector('[data-plan-mail]');
+  const $ = (s) => form.querySelector(s);
+  const hours = $('[data-hours]');
   const RATES = { weekday: 45, evening: 48.95 };
 
   const update = () => {
     const h = Number(hours.value);
     const when = form.querySelector('input[name=when]:checked').value;
     const car = form.querySelector('input[name=car]:checked').value;
-    const free = Math.floor(h / 11);              // buy ten, the eleventh is free
+    const free = Math.floor(h / 11);            // buy ten, the eleventh is free
     const paid = h - free;
     const rate = RATES[when];
-    const sum = paid * rate;
-    hoursOut.textContent = `${h} ${h === 1 ? 'hour' : 'hours'}`;
-    total.textContent = money(sum);
-    detail.textContent = free
-      ? `${h} hours, of which ${free} ${free === 1 ? 'is' : 'are'} free with block booking. ${paid} paid hours at ${money(rate)}.`
-      : `${h} ${h === 1 ? 'hour' : 'hours'} at ${money(rate)}. Book eleven and one of them is free.`;
+    const total = paid * rate;
+    hours.style.setProperty('--fill', `${((h - hours.min) / (hours.max - hours.min)) * 100}%`);
+    $('[data-hours-out]').textContent = `${h} ${h === 1 ? 'hour' : 'hours'}`;
+    $('[data-total]').textContent = money(total);
+    $('[data-paid]').textContent = `${paid} × ${money(rate)}`;
+    $('[data-free]').textContent = free ? `${free}` : 'Book 11 for 1 free';
+    $('[data-save]').textContent = money(free * rate);
+    $('[data-meter-paid]').style.flexBasis = `${(paid / h) * 100}%`;
+    $('[data-meter-free]').style.flexBasis = `${(free / h) * 100}%`;
     const whenText = when === 'weekday' ? 'weekdays' : 'evenings and weekends';
-    const body = `Hello,\n\nI'd like to book driving lessons.\n\nHours: ${h}\nWhen: ${whenText}\nCar: ${car}\nEstimate from your website: ${money(sum)}\n\nMy name:\nMy phone number:\n\nThank you.`;
-    mail.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Lesson plan: ${h} hours, ${car}`)}&body=${encodeURIComponent(body)}`;
+    const body = `Hello,\n\nI'd like to book driving lessons.\n\nHours: ${h}\nWhen: ${whenText}\nCar: ${car}\nEstimate from your website: ${money(total)}\n\nMy name:\nMy phone number:\n\nThank you.`;
+    $('[data-plan-mail]').href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Lesson plan: ${h} hours, ${car}`)}&body=${encodeURIComponent(body)}`;
   };
   form.addEventListener('input', update);
-  form.addEventListener('submit', (e) => { e.preventDefault(); location.href = mail.href; });
+  form.addEventListener('submit', (e) => { e.preventDefault(); location.href = $('[data-plan-mail]').href; });
   update();
 })();
 
-// Pinned story: the car picture follows the caption in the middle of the screen.
+// 3D drop gallery: photos fall from above and land in a stack as you scroll.
 (() => {
-  const steps = [...document.querySelectorAll('[data-car-step]')];
-  const pics = [...document.querySelectorAll('[data-car]')];
-  const caption = document.querySelector('[data-cars-caption]');
-  if (!steps.length || !('IntersectionObserver' in window)) { steps.forEach((s) => s.classList.add('is-on')); return; }
-  const show = (i) => {
-    steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
-    pics.forEach((p, k) => p.classList.toggle('is-on', k === i));
-    caption.textContent = steps[i].querySelector('.car__name').textContent;
+  const section = document.querySelector('[data-drop]');
+  if (!section) return;
+  const cards = [...section.querySelectorAll('.dcard')];
+  const desktop = matchMedia('(min-width: 861px)');
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  let ticking = false;
+
+  const render = () => {
+    ticking = false;
+    const r = section.getBoundingClientRect();
+    const progress = desktop.matches
+      ? clamp(-r.top / (r.height - innerHeight))
+      : clamp((innerHeight - r.top) / (r.height + innerHeight * 0.2));
+    cards.forEach((card, i) => {
+      const start = i * 0.13, span = desktop.matches ? 0.32 : 0.4;
+      const t = reduce ? 1 : ease(clamp((progress - start) / span));
+      const y = (1 - t) * -115;                 // vh above
+      const rx = (1 - t) * 68;                  // tipped back
+      const rz = (1 - t) * (i % 2 ? 22 : -22);
+      const s = 1 + (1 - t) * 0.25;
+      card.style.transform = `translate(-50%, -50%) translate(calc(var(--x) * var(--spread, 1)), var(--y)) translateY(${y}vh) rotateX(${rx}deg) rotate(calc(var(--r) + ${rz}deg)) scale(${s})`;
+      card.style.opacity = String(Math.min(1, t * 2.2));
+    });
   };
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) show(steps.indexOf(e.target)); });
-  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-  steps.forEach((s) => io.observe(s));
-  show(0);
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(render); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  render();
 })();
 
-// The drag row: progress bar, buttons, and mouse dragging.
-(() => {
-  const row = document.querySelector('[data-steps-row]');
-  if (!row) return;
-  const bar = document.querySelector('[data-steps-progress]');
-  const step = () => (row.querySelector('.step')?.getBoundingClientRect().width || 300) + 32;
-  const progress = () => {
-    const max = row.scrollWidth - row.clientWidth;
-    const visible = row.clientWidth / row.scrollWidth;
-    bar.style.width = `${Math.min(100, (visible + (max > 0 ? row.scrollLeft / max : 1) * (1 - visible)) * 100)}%`;
-  };
-  row.addEventListener('scroll', progress, { passive: true });
-  window.addEventListener('resize', progress);
-  progress();
-  document.querySelector('[data-steps-prev]')?.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: 'smooth' }));
-  document.querySelector('[data-steps-next]')?.addEventListener('click', () => row.scrollBy({ left: step(), behavior: 'smooth' }));
-
-  let down = false, startX = 0, startLeft = 0, moved = false;
-  row.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.target.closest('a')) return;
-    down = true; moved = false; startX = e.clientX; startLeft = row.scrollLeft;
-    row.style.scrollSnapType = 'none'; row.style.cursor = 'grabbing'; row.classList.add('is-dragging');
-  });
-  window.addEventListener('pointermove', (e) => {
-    if (!down) return;
-    const dx = e.clientX - startX; if (Math.abs(dx) > 4) moved = true;
-    row.scrollLeft = startLeft - dx;
-  });
-  window.addEventListener('pointerup', () => {
-    if (!down) return;
-    down = false; row.style.cursor = ''; row.style.scrollSnapType = ''; row.classList.remove('is-dragging');
-  });
-  row.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
-  row.querySelectorAll('img').forEach((img) => img.setAttribute('draggable', 'false'));
-})();
-
-// Booking coupon: validate, then open an email with the details filled in.
+// Booking form: validate, then open an email with the details filled in.
 (() => {
   const form = document.querySelector('[data-coupon]');
   if (!form) return;
   const error = form.querySelector('[data-coupon-error]');
   const name = form.elements.name, phone = form.elements.phone;
-  form.noValidate = true;
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const missing = [name, phone].filter((f) => !f.value.trim());
@@ -139,9 +143,4 @@ const money = (n) => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2
     const body = `Hello,\n\nI'd like to book my first driving lesson.\n\nName: ${name.value.trim()}\nPhone: ${phone.value.trim()}\nEmail: ${form.elements.email.value.trim() || '-'}\nCar: ${form.elements.car.value}\n\nPlease call me back to arrange a time.`;
     location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Booking request: first lesson')}&body=${encodeURIComponent(body)}`;
   });
-
-  // Keep the side notches on the perforation when the coupon stacks on a phone.
-  const left = form.querySelector('.coupon__left');
-  const place = () => form.style.setProperty('--notch', `${left.offsetHeight}px`);
-  window.addEventListener('resize', place); place();
 })();

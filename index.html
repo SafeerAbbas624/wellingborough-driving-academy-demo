@@ -2,323 +2,333 @@
 <html lang="en-GB">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Wellingborough Driving Academy · Driving lessons since 1977</title>
-  <meta name="description" content="Manual and electric automatic driving lessons in Wellingborough since 1977. £45 an hour, price frozen once you start. 45 Broad Green, NN8 4LH. Call 01933 226682.">
+  <meta name="description" content="Patient, one-to-one driving lessons in Wellingborough since 1977. Manual or electric automatic, £45 an hour and your price never rises. Call 01933 226682.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#181715">
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="img/hero-mini.webp">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/v2-hero-mini.webp">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js')</script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/" } }</script>
 </head>
 <body>
-  <a class="skip" href="#prices">Skip to content</a>
-
+  <a class="skip" href="#main">Skip to content</a>
   <p class="demo-note">Concept homepage prepared for Wellingborough Driving Academy by Tommaso Sarracino. Not the live website.</p>
 
-  <!-- HERO: the roof sign as a card over the car it rides on -->
-  <header class="hero" id="top">
-    <img class="hero__photo" src="img/hero-mini.webp" width="1200" height="750"
-         alt="The Academy’s silver Mini Electric learner car with its roof sign, parked on a Wellingborough street" fetchpriority="high">
-    <div class="sign" data-sign>
-      <h1 class="sign__title" translate="no"><span>Wellingborough</span> <span>Driving</span> <span>Academy</span></h1>
-      <div class="sign__body">
-        <p class="sign__address">45 Broad Green, Wellingborough</p>
-        <p class="sign__phone"><a href="tel:+441933226682" aria-label="Call the office on 01933 226682">01933 · 22 66 82</a></p>
-        <p class="sign__lead">Driving lessons in Wellingborough since 1977. Manual or electric automatic, £45 an hour, and your price never rises once you start.</p>
-      </div>
-      <div class="sign__foot">
-        <span class="sign__credit">Est. 1977 · WADDIA members</span>
-        <a class="btn btn--accent" href="#book">Book a lesson</a>
-        <a class="sign__link" href="#prices">See the prices</a>
-      </div>
+  <header class="nav" data-nav>
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="Wellingborough Driving Academy, back to top">
+        <span class="brand__mark" aria-hidden="true">L</span>
+        <span class="brand__name" translate="no">Wellingborough<br>Driving Academy</span>
+      </a>
+      <nav class="nav__links" aria-label="Main">
+        <a href="#prices">Prices</a>
+        <a href="#cars">Our cars</a>
+        <a href="#courses">Courses</a>
+        <a href="#about">About</a>
+        <a href="#book">Contact</a>
+      </nav>
+      <a class="btn btn--ink nav__call" href="tel:+441933226682">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+        <span>01933 226682</span>
+      </a>
     </div>
   </header>
 
-  <!-- The sign shrinks to a door-panel stub that stays with you -->
-  <a class="stub" href="tel:+441933226682" data-stub aria-label="Call Wellingborough Driving Academy on 01933 226682">
-    <span class="stub__name" translate="no">W.D.A.</span>
-    <span class="stub__num">W 226682</span>
-  </a>
-
   <main id="main">
 
-    <!-- PRICES: set like a menu, with the live planner -->
-    <section class="prices section" id="prices" aria-labelledby="prices-h">
-      <div class="prices__side">
-        <h2 id="prices-h" class="h2" data-reveal>Honest prices</h2>
-        <p class="prices__note" data-reveal>No surcharges, no holiday extras. Once you start a course, your hourly fee stays where it was on day one.</p>
-        <img class="prices__photo" src="img/car-corsa.webp" width="1000" height="1000" loading="lazy"
-             alt="The Academy’s grey Vauxhall Corsa with its door open, ready for a lesson" data-reveal>
+    <!-- HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-h">
+      <div class="hero__media" aria-hidden="true">
+        <img class="hero__photo" src="img/v2-hero-mini.webp" width="1200" height="761" alt="" fetchpriority="high">
+      </div>
+      <canvas class="hero__sign" data-sign3d aria-label="A 3D model of the Academy's roof sign, slowly turning" role="img"></canvas>
+
+      <div class="hero__copy">
+        <p class="hero__since"><span class="dot" aria-hidden="true"></span>Teaching Wellingborough since 1977</p>
+        <h1 id="hero-h" class="hero__title">Learn to drive in <span class="hl">Wellingborough</span></h1>
+        <p class="hero__lead">Patient, one-to-one lessons in a manual Corsa or the electric Mini. <strong>£45 an hour</strong>, and your price never rises once you start.</p>
+        <div class="hero__actions">
+          <a class="btn btn--brand btn--lg" href="#book">Book your first lesson</a>
+          <a class="btn btn--ghost btn--lg" href="#prices">Plan your lessons</a>
+        </div>
+        <ul class="hero__facts">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Manual and electric automatic</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Free theory coaching</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Dual-control cars</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="strip" aria-label="At a glance">
+      <dl class="strip__inner">
+        <div data-reveal><dt>Established</dt><dd>1977</dd></div>
+        <div data-reveal><dt>Per hour</dt><dd>£45</dd></div>
+        <div data-reveal><dt>Block of ten</dt><dd>11th hour free</dd></div>
+        <div data-reveal><dt>Open weekdays</dt><dd>6am – 8pm</dd></div>
+      </dl>
+    </section>
+
+    <!-- PRICES + PLANNER -->
+    <section class="section prices" id="prices" aria-labelledby="prices-h">
+      <div class="section__head" data-reveal>
+        <h2 id="prices-h" class="h2">Simple, honest prices</h2>
+        <p class="section__lead">No surcharges, no holiday extras, no charge for learning in the electric car. Once you start, your hourly rate is locked.</p>
       </div>
 
-      <div class="menu" data-reveal>
-        <div class="menu__group">
-          <h3 class="menu__name">Lessons</h3>
-          <div class="item"><span class="item__name">Weekday lesson, one hour</span><span class="item__price">£45.00</span>
-            <p class="item__desc">Monday to Friday, 6am to 8pm. Manual or electric automatic.</p></div>
-          <div class="item"><span class="item__name">Evening or weekend lesson</span><span class="item__price">£48.95</span>
-            <p class="item__desc">For when the day job gets in the way. Weekends by arrangement.</p></div>
-          <div class="item"><span class="item__name">Electric automatic</span><span class="item__price">No extra</span>
-            <p class="item__desc">Learn in the Mini Electric at the standard rate.</p></div>
-          <div class="item"><span class="item__name">One pupil per car</span><span class="item__price">Always</span>
-            <p class="item__desc">The whole hour is yours. Lessons are never shared.</p></div>
-        </div>
-        <div class="menu__group">
-          <h3 class="menu__name">Booking ahead</h3>
-          <div class="item"><span class="item__name">Block of ten hours</span><span class="item__price">£450.00</span>
-            <p class="item__desc">Buy ten hours and your eleventh hour is free.</p></div>
-          <div class="item"><span class="item__name">Lessons in your own car</span><span class="item__price">Ask us</span>
-            <p class="item__desc">A further discount when you learn in your own insured car.</p></div>
-          <div class="item"><span class="item__name">Gift voucher</span><span class="item__price">Any value</span>
-            <p class="item__desc">Call in at 45 Broad Green to buy one.</p></div>
-        </div>
-        <div class="menu__group">
-          <h3 class="menu__name">Free to everyone</h3>
-          <div class="item"><span class="item__name">Theory test coaching</span><span class="item__price">£0</span>
-            <p class="item__desc">No obligation to book lessons with us.</p></div>
-          <div class="item"><span class="item__name">Car maintenance coaching</span><span class="item__price">£0</span>
-            <p class="item__desc">Tyres, oil and lights, before you drive alone.</p></div>
-        </div>
+      <div class="plans">
+        <article class="plan" data-reveal data-tilt>
+          <h3 class="plan__name">Weekday lesson</h3>
+          <p class="plan__price"><span>£45</span><small>/ hour</small></p>
+          <ul class="ticks">
+            <li>Monday to Friday, 6am to 8pm</li>
+            <li>Manual or electric automatic</li>
+            <li>One pupil per car, always</li>
+          </ul>
+          <a class="btn btn--ghost" href="#book">Book a weekday lesson</a>
+        </article>
+        <article class="plan plan--featured" data-reveal data-tilt>
+          <p class="plan__badge">Best value</p>
+          <h3 class="plan__name">Block of ten hours</h3>
+          <p class="plan__price"><span>£450</span><small>/ 11 hours</small></p>
+          <ul class="ticks">
+            <li>Your eleventh hour is free</li>
+            <li>Rate locked for your whole course</li>
+            <li>Use them at your own pace</li>
+          </ul>
+          <a class="btn btn--brand" href="#book">Book a block</a>
+        </article>
+        <article class="plan" data-reveal data-tilt>
+          <h3 class="plan__name">Evenings &amp; weekends</h3>
+          <p class="plan__price"><span>£48.95</span><small>/ hour</small></p>
+          <ul class="ticks">
+            <li>Fits around work or college</li>
+            <li>Weekends by arrangement</li>
+            <li>Gift vouchers available</li>
+          </ul>
+          <a class="btn btn--ghost" href="#book">Ask about a time</a>
+        </article>
       </div>
 
-      <!-- Live thing: the lesson planner -->
-      <form class="planner" data-planner data-ui aria-labelledby="planner-h" action="mailto:info@wellingboroughdrivingacademy.com" method="post" enctype="text/plain">
-        <h3 id="planner-h" class="planner__title">Plan your lessons</h3>
-        <div class="planner__controls">
+      <!-- The planner -->
+      <form class="planner" data-planner aria-labelledby="planner-h" action="mailto:info@wellingboroughdrivingacademy.com" method="post" enctype="text/plain" data-reveal>
+        <div class="planner__inputs">
+          <h3 id="planner-h" class="planner__title">Plan your lessons</h3>
+          <p class="planner__intro">Move the slider to see what your lessons will cost.</p>
+
           <label class="planner__field">
-            <span class="planner__label">Hours of lessons</span>
-            <input type="range" name="hours" min="1" max="44" value="22" step="1" data-hours aria-describedby="hours-out">
-            <output id="hours-out" class="planner__hours" data-hours-out>22 hours</output>
+            <span class="planner__label">How many hours? <output class="planner__hours" data-hours-out>22 hours</output></span>
+            <input class="range" type="range" name="hours" min="1" max="44" value="22" step="1" data-hours>
+            <span class="planner__scale" aria-hidden="true"><span>1</span><span>11</span><span>22</span><span>33</span><span>44</span></span>
           </label>
-          <fieldset class="planner__choice">
+
+          <fieldset class="seg">
             <legend class="planner__label">When</legend>
-            <label><input type="radio" name="when" value="weekday" checked> Weekdays</label>
-            <label><input type="radio" name="when" value="evening" > Evenings and weekends</label>
+            <div class="seg__opts">
+              <label><input type="radio" name="when" value="weekday" checked><span>Weekdays</span></label>
+              <label><input type="radio" name="when" value="evening"><span>Evenings &amp; weekends</span></label>
+            </div>
           </fieldset>
-          <fieldset class="planner__choice">
+          <fieldset class="seg">
             <legend class="planner__label">Car</legend>
-            <label><input type="radio" name="car" value="Vauxhall Corsa (manual)" checked> Corsa, manual</label>
-            <label><input type="radio" name="car" value="Mini Electric (automatic)"> Mini Electric, automatic</label>
+            <div class="seg__opts">
+              <label><input type="radio" name="car" value="Vauxhall Corsa (manual)" checked><span>Corsa · manual</span></label>
+              <label><input type="radio" name="car" value="Mini Electric (automatic)"><span>Mini Electric · automatic</span></label>
+            </div>
           </fieldset>
         </div>
+
         <div class="planner__result" aria-live="polite">
+          <p class="planner__kicker">Your estimate</p>
           <p class="planner__total" data-total>£900.00</p>
-          <p class="planner__detail" data-detail>22 hours, of which 2 are free with block booking. Paid hours at £45.00.</p>
-          <a class="btn btn--ink" href="mailto:info@wellingboroughdrivingacademy.com" data-plan-mail>Email this plan to the school</a>
-          <p class="planner__small">An estimate from the published prices. Your rate is fixed when you start.</p>
+          <div class="planner__meter" aria-hidden="true"><span data-meter-paid></span><span data-meter-free></span></div>
+          <dl class="planner__rows">
+            <div><dt>Paid hours</dt><dd data-paid>20 × £45.00</dd></div>
+            <div><dt>Free hours</dt><dd data-free>2</dd></div>
+            <div><dt>You save</dt><dd data-save>£90.00</dd></div>
+          </dl>
+          <a class="btn btn--brand btn--block" href="mailto:info@wellingboroughdrivingacademy.com" data-plan-mail>Email this plan to the school</a>
+          <p class="planner__small">Estimate from published prices. Your rate is fixed when you start.</p>
         </div>
       </form>
     </section>
 
-    <!-- CARS: pinned story, the picture holds while the facts pass -->
-    <section class="cars" id="cars" aria-labelledby="cars-h">
-      <div class="cars__inner">
-        <figure class="cars__media" data-cars-media>
-          <div class="cars__pictures">
-            <img src="img/car-mini.webp" width="761" height="761" loading="lazy" class="is-on" data-car="0"
-                 alt="Silver Mini Electric with yellow mirror caps and the Academy’s door sign reading Auto / Electric, W 226682">
-            <img src="img/car-corsa-white.webp" width="600" height="600" loading="lazy" data-car="1"
-                 alt="White Vauxhall Corsa learner car with the Academy roof sign, on a brick driveway">
-            <img src="img/car-mini-rear.webp" width="761" height="761" loading="lazy" data-car="2"
-                 alt="Rear of the Mini Electric showing the L plate and the roof sign">
-            <img src="img/step-pupil-dave.webp" width="488" height="611" loading="lazy" data-car="3"
-                 alt="Dave holding the driver’s door of the Corsa open for a pupil">
+    <!-- CARS -->
+    <section class="section cars" id="cars" aria-labelledby="cars-h">
+      <div class="section__head" data-reveal>
+        <h2 id="cars-h" class="h2">Two modern cars, both dual control</h2>
+        <p class="section__lead">Easy to manoeuvre, hard to stall, and packed with safety kit. Pick the one that suits the licence you want.</p>
+      </div>
+      <div class="cars__grid">
+        <article class="car" data-reveal data-tilt>
+          <div class="car__img"><img src="img/v2-mini-side.webp" width="1200" height="761" loading="lazy" alt="The Academy's silver Mini Electric with yellow mirror caps and the Auto / Electric door sign"></div>
+          <div class="car__body">
+            <p class="car__tag">Automatic · Electric</p>
+            <h3 class="car__name">Mini Electric</h3>
+            <p>Silent, smooth and impossible to stall, so you can focus on the road instead of the clutch. Same price as every other lesson.</p>
+            <ul class="specs"><li>No gears</li><li>Zero emissions</li><li>Dual controls</li></ul>
           </div>
-          <figcaption class="cars__caption" data-cars-caption>Mini Electric, automatic</figcaption>
-        </figure>
-        <div class="cars__list">
-          <h2 id="cars-h" class="h2 cars__heading">Two cars, both dual control</h2>
-          <article class="car" data-car-step="0">
-            <img class="car__pic" src="img/car-mini.webp" width="761" height="761" loading="lazy" alt="Silver Mini Electric with yellow mirror caps and the Academy door sign">
-            <h3 class="car__name">Mini Electric, automatic</h3>
-            <p>Our latest car. Quiet, smooth and impossible to stall, so you can think about the road instead of the clutch. Learning in it costs exactly the same.</p>
-          </article>
-          <article class="car" data-car-step="1">
-            <img class="car__pic" src="img/car-corsa-white.webp" width="600" height="600" loading="lazy" alt="White Vauxhall Corsa learner car with the Academy roof sign">
-            <h3 class="car__name">Vauxhall Corsa, manual</h3>
-            <p>A 1.5 litre diesel that is easy to manoeuvre and hard to stall. The car to learn in if you want a full manual licence.</p>
-          </article>
-          <article class="car" data-car-step="2">
-            <img class="car__pic" src="img/car-mini-rear.webp" width="761" height="761" loading="lazy" alt="Rear of the Mini Electric with the L plate and roof sign">
-            <h3 class="car__name">Safety built in</h3>
-            <p>Dual controls in both cars, plus airbags, anti-lock brakes, power steering and hill-start assist. Learn in safety and confidence.</p>
-          </article>
-          <article class="car" data-car-step="3">
-            <img class="car__pic" src="img/step-pupil-dave.webp" width="488" height="611" loading="lazy" alt="Dave holding the Corsa’s door open for a pupil">
-            <h3 class="car__name">The whole hour is yours</h3>
-            <p>One pupil per car, every lesson. Your instructor’s attention stays on you from the moment the door opens.</p>
-          </article>
+        </article>
+        <article class="car" data-reveal data-tilt>
+          <div class="car__img"><img src="img/v2-corsa-door.webp" width="1400" height="1050" loading="lazy" alt="The Academy's grey Vauxhall Corsa with the driver's door open and roof sign on top"></div>
+          <div class="car__body">
+            <p class="car__tag">Manual · 1.5 diesel</p>
+            <h3 class="car__name">Vauxhall Corsa</h3>
+            <p>The car to learn in for a full manual licence. Light steering, hill-start assist and a clutch that is kind to beginners.</p>
+            <ul class="specs"><li>Hill-start assist</li><li>ABS &amp; airbags</li><li>Dual controls</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3D DROP GALLERY -->
+    <section class="drop" id="gallery" aria-labelledby="drop-h" data-drop>
+      <div class="drop__stage">
+        <div class="drop__copy">
+          <h2 id="drop-h" class="h2">On the roads you’ll be tested on</h2>
+          <p class="section__lead">Quiet estates, busy junctions and the town centre. We teach on the real Wellingborough roads, in the cars you see here.</p>
+        </div>
+        <div class="drop__cards">
+          <figure class="dcard" style="--x:-34%;--y:-6%;--r:-8deg;--z:1"><img src="img/v2-corsa-street.webp" width="1400" height="1050" loading="lazy" alt="The Corsa parked on a quiet street of semi-detached houses"></figure>
+          <figure class="dcard" style="--x:30%;--y:-14%;--r:6deg;--z:2"><img src="img/v2-mini-rear.webp" width="1200" height="761" loading="lazy" alt="The Mini Electric from behind, with roof sign and L plate"></figure>
+          <figure class="dcard" style="--x:-10%;--y:22%;--r:-3deg;--z:3"><img src="img/v2-corsa-front.webp" width="1400" height="1050" loading="lazy" alt="The Corsa driving down a tree-lined road towards the camera"></figure>
+          <figure class="dcard" style="--x:38%;--y:28%;--r:9deg;--z:4"><img src="img/v2-dave-pupil.webp" width="880" height="611" loading="lazy" alt="Dave holding the door of the white Corsa for a pupil"></figure>
+          <figure class="dcard dcard--sign" style="--x:4%;--y:-34%;--r:4deg;--z:5"><img src="img/v2-sign.webp" width="880" height="439" loading="lazy" alt="Close-up of the Academy's sign: 45 Broad Green, Wellingborough, 01933 22 66 82"></figure>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT: the letter from Broad Green -->
-    <section class="about section" id="about" aria-labelledby="about-h">
-      <article class="letter" data-reveal>
-        <img class="letter__portrait" src="img/dave.webp" width="240" height="240" loading="lazy" alt="Dave, proprietor of Wellingborough Driving Academy">
-        <h2 id="about-h" class="letter__heading">Since 1977, on Broad Green</h2>
-        <p>We opened our doors at 45 Broad Green in 1977, and we have been teaching Wellingborough to drive ever since.</p>
-        <figure class="letter__plate">
-          <img src="img/broad-green-1977.webp" width="878" height="439" loading="lazy"
-               alt="Black and white photograph of the original Wellingborough Driving Academy office on Broad Green, with three cars of the era parked outside">
-          <figcaption>The Academy’s office on Broad Green, in its early years.</figcaption>
-        </figure>
-        <p>We are the only school in town with its own classroom, so new and nervous pupils can learn what happens before they ever pull away. Theory coaching is free for anyone who asks, whether you learn with us or not.</p>
-        <p>No gimmicks, no mis-selling and no price rises. Just honest, patient instruction at a fair price.</p>
-        <p>We run as close to carbon neutral as we can: an electric car on the fleet, more than 80% of our waste recycled, and charity weeks where 10% of the week’s profit goes to a good cause.</p>
-        <p>If anything ever worries you, talk to your instructor first, then to me. If it still isn’t right, the DVSA’s instructor conduct team will look at it.</p>
-        <p class="letter__sign">Dave</p>
-        <p class="letter__role">Proprietor, Wellingborough Driving Academy</p>
-      </article>
-      <div class="letter__strip">
-        <a href="mailto:info@wellingboroughdrivingacademy.com">info@wellingboroughdrivingacademy.com</a>
-        <a class="btn btn--ink" href="#book">Write to us</a>
+    <!-- WHY US -->
+    <section class="section why" aria-labelledby="why-h">
+      <div class="section__head" data-reveal>
+        <h2 id="why-h" class="h2">Why learners choose us</h2>
+      </div>
+      <div class="why__grid">
+        <div class="feat" data-reveal>
+          <span class="feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10 12 5l9 5-9 5-9-5Z"/><path d="M7 12v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4"/></svg></span>
+          <h3>A real classroom</h3>
+          <p>The only school in town with its own classroom, so nervous pupils can learn the basics before they ever pull away.</p>
+        </div>
+        <div class="feat" data-reveal>
+          <span class="feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3V5Z"/><path d="M8 9h6M8 13h6"/></svg></span>
+          <h3>Free theory coaching</h3>
+          <p>Help with the theory test and the Highway Code for anyone who asks, with no obligation to book.</p>
+        </div>
+        <div class="feat" data-reveal>
+          <span class="feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>Your price, locked</h3>
+          <p>No surcharges and no rises once you start a course. The rate on day one is the rate on test day.</p>
+        </div>
+        <div class="feat" data-reveal>
+          <span class="feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c8 0 14-6 14-14-8 0-14 6-14 14Z"/><path d="M5 19 13 11"/></svg></span>
+          <h3>Greener lessons</h3>
+          <p>An electric car on the fleet, over 80% of waste recycled, and charity weeks where 10% of profits go to a good cause.</p>
+        </div>
       </div>
     </section>
 
-    <!-- COURSES: the printed sheet -->
-    <section class="courses" id="courses" aria-labelledby="courses-h">
-      <div class="sheet" data-reveal>
-        <h2 id="courses-h" class="sheet__title">Courses</h2>
-        <p class="sheet__note">Manual and automatic, with fully qualified instructors.</p>
-
-        <div class="sheet__group">
-          <h3 class="sheet__name">Learning to drive</h3>
-          <div class="row"><span>Manual lessons, Vauxhall Corsa</span><span>£45 / hr</span><small>For a full manual licence.</small></div>
-          <div class="row"><span>Automatic lessons, Mini Electric</span><span>£45 / hr</span><small>No clutch, no stalling, no surcharge.</small></div>
-          <div class="row"><span>Intensive course</span><span>Ask</span><small>More hours each week, for a test sooner.</small></div>
-          <div class="row"><span>Classroom start</span><span>Ask</span><small>For new or nervous pupils, before the first drive.</small></div>
+    <!-- ABOUT -->
+    <section class="section about" id="about" aria-labelledby="about-h">
+      <figure class="about__photo" data-reveal data-tilt>
+        <img src="img/v2-broad-green.webp" width="880" height="439" loading="lazy" alt="Black and white photograph of the original Wellingborough Driving Academy office on Broad Green, with cars of the era outside">
+        <figcaption>Our office on Broad Green, in the early years.</figcaption>
+      </figure>
+      <div class="about__copy" data-reveal>
+        <h2 id="about-h" class="h2">Same street. Same honest approach.</h2>
+        <p>Wellingborough Driving Academy opened at 45 Broad Green in 1977 and has been teaching the town to drive ever since. No gimmicks, no mis-selling and no price rises, just patient instruction from qualified instructors.</p>
+        <p>We are WADDIA members and work to the DVSA ADI Code of Practice. If anything ever concerns you, speak to your instructor, then the proprietor, Dave. The DVSA’s instructor conduct team is there if it still isn’t resolved.</p>
+        <div class="about__sign">
+          <img src="img/dave.webp" width="240" height="240" loading="lazy" alt="Dave, proprietor">
+          <p><strong>Dave</strong><br><span>Proprietor</span></p>
         </div>
-        <div class="sheet__group">
-          <h3 class="sheet__name">After you pass</h3>
-          <div class="row"><span>Pass Plus</span><span>Ask</span><small>Extra practical training for new drivers.</small></div>
-          <div class="row"><span>Motorway lessons</span><span>Ask</span><small>Joining, overtaking and leaving with confidence.</small></div>
-          <div class="row"><span>Refresher course</span><span>Ask</span><small>Back behind the wheel after a break.</small></div>
-          <div class="row"><span>Advanced driving</span><span>Ask</span><small>Sharpen the skills you already have.</small></div>
-        </div>
-        <div class="sheet__group">
-          <h3 class="sheet__name">Free to everyone</h3>
-          <div class="row"><span>Theory test coaching</span><span>Free</span><small>No obligation.</small></div>
-          <div class="row"><span>Car maintenance coaching</span><span>Free</span><small>Look after the car you pass in.</small></div>
-        </div>
-        <p class="sheet__hours">Open 6am to 8pm, Monday to Friday.<br>Weekends by arrangement.</p>
       </div>
     </section>
 
-    <!-- STEPS: the road from provisional to pass -->
-    <section class="steps section" id="steps" aria-labelledby="steps-h">
-      <div class="steps__top">
+    <!-- COURSES -->
+    <section class="section courses" id="courses" aria-labelledby="courses-h">
+      <div class="section__head" data-reveal>
+        <h2 id="courses-h" class="h2">Courses for every stage</h2>
+        <p class="section__lead">Manual and automatic, with fully qualified instructors. Ask us about prices for longer courses.</p>
+      </div>
+      <div class="courses__grid">
+        <div class="course" data-reveal><h3>Beginner lessons</h3><p>From your very first drive to test standard, at your pace.</p></div>
+        <div class="course" data-reveal><h3>Intensive course</h3><p>More hours each week for learners who want a test sooner.</p></div>
+        <div class="course" data-reveal><h3>Classroom start</h3><p>For new or nervous pupils, before the first time behind the wheel.</p></div>
+        <div class="course" data-reveal><h3>Pass Plus</h3><p>Extra practical training for newly qualified drivers.</p></div>
+        <div class="course" data-reveal><h3>Motorway lessons</h3><p>Joining, overtaking and leaving with confidence.</p></div>
+        <div class="course" data-reveal><h3>Refresher &amp; advanced</h3><p>Back behind the wheel after a break, or sharpen your skills.</p></div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="section steps" aria-labelledby="steps-h">
+      <div class="section__head" data-reveal>
         <h2 id="steps-h" class="h2">From provisional to pass</h2>
-        <div class="steps__buttons">
-          <button type="button" class="square" data-steps-prev aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <button type="button" class="square" data-steps-next aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-        </div>
       </div>
-      <div class="steps__bar" aria-hidden="true"><span data-steps-progress></span></div>
-      <ol class="steps__row" data-steps-row tabindex="0" aria-label="Steps from provisional licence to passing, scrolls sideways">
-        <li class="step" style="--gap:96px">
-          <h3 class="step__title">First, your provisional</h3>
-          <p>Apply online from age 15 years and 9 months. You can start lessons on your 17th birthday.</p>
-          <a class="step__link" href="https://www.gov.uk/apply-first-provisional-driving-licence">Apply on GOV.UK</a>
-          <img src="img/step-corsa-street.webp" width="640" height="800" loading="lazy" alt="The grey Corsa parked on a quiet Wellingborough street of semi-detached houses">
-        </li>
-        <li class="step" style="--gap:40px">
-          <h3 class="step__title">Then the classroom</h3>
-          <p>Nervous or new to it all? Start at Broad Green, where we explain the car and the road before you drive.</p>
-          <a class="step__link" href="#about">About the classroom</a>
-          <img src="img/broad-green-1977-tall.webp" width="351" height="439" loading="lazy" alt="The Academy’s original Broad Green office, in black and white">
-        </li>
-        <li class="step" style="--gap:128px">
-          <h3 class="step__title">Pass your theory</h3>
-          <p>Free coaching from us, the Highway Code from GOV.UK, then book your theory test.</p>
-          <a class="step__link" href="https://www.gov.uk/book-theory-test">Book a theory test</a>
-          <img src="img/step-mini-sign.webp" width="608" height="761" loading="lazy" alt="The Mini Electric from behind, with its roof sign and L plate">
-        </li>
-        <li class="step" style="--gap:64px">
-          <h3 class="step__title">Lessons on local roads</h3>
-          <p>From quiet estates to the A45 and town centre, in the Corsa or the Mini, at times that suit you.</p>
-          <a class="step__link" href="#prices">Plan your hours</a>
-          <img src="img/step-corsa-front.webp" width="640" height="800" loading="lazy" alt="The Corsa driving towards the camera down a tree-lined Wellingborough road">
-        </li>
-        <li class="step" style="--gap:112px">
-          <h3 class="step__title">Book the practical</h3>
-          <p>When your instructor says you’re ready, book your driving test. We’ll take you there in the car you know.</p>
-          <a class="step__link" href="https://www.gov.uk/book-driving-test">Book a driving test</a>
-          <img src="img/step-pupil-dave.webp" width="488" height="611" loading="lazy" alt="Dave and a pupil beside the white Corsa">
-        </li>
-        <li class="step" style="--gap:48px">
-          <h3 class="step__title">Keep going after</h3>
-          <p>Pass Plus, motorway and advanced lessons, so the first year on your own is a confident one.</p>
-          <a class="step__link" href="https://www.gov.uk/pass-plus">About Pass Plus</a>
-          <img src="img/step-mini-side.webp" width="600" height="750" loading="lazy" alt="The Mini Electric seen from the side, with the Academy’s door sign">
-        </li>
+      <ol class="timeline">
+        <li data-reveal><h3>Get your provisional</h3><p>Apply from 15 years and 9 months old.</p><a href="https://www.gov.uk/apply-first-provisional-driving-licence">Apply on GOV.UK</a></li>
+        <li data-reveal><h3>Start with us</h3><p>Classroom or car first, whatever suits you.</p><a href="#book">Book a lesson</a></li>
+        <li data-reveal><h3>Pass your theory</h3><p>Free coaching, then book the test.</p><a href="https://www.gov.uk/book-theory-test">Book theory test</a></li>
+        <li data-reveal><h3>Take your practical</h3><p>When your instructor says you’re ready.</p><a href="https://www.gov.uk/book-driving-test">Book driving test</a></li>
+        <li data-reveal><h3>Keep improving</h3><p>Pass Plus and motorway lessons.</p><a href="https://www.gov.uk/pass-plus">About Pass Plus</a></li>
       </ol>
     </section>
 
-    <!-- BOOK: the clip-out coupon -->
-    <section class="book section" id="book" aria-labelledby="book-h">
-      <form class="coupon" data-coupon action="mailto:info@wellingboroughdrivingacademy.com" method="post" enctype="text/plain">
-        <div class="coupon__left">
-          <h2 id="book-h" class="coupon__heading">Book your first lesson</h2>
-          <p>Send this and we’ll ring you back to find a time. Or call the office on <a href="tel:+441933226682">01933 226682</a>, or the mobile on <a href="tel:+447442539858">07442 539858</a>.</p>
+    <!-- BOOK -->
+    <section class="section book" id="book" aria-labelledby="book-h">
+      <div class="book__card" data-reveal>
+        <div class="book__info">
+          <h2 id="book-h" class="h2">Book your first lesson</h2>
+          <p class="section__lead">Send your details and we’ll call you back to find a time.</p>
+          <ul class="contact">
+            <li><span>Office</span><a href="tel:+441933226682">01933 226682</a></li>
+            <li><span>Mobile</span><a href="tel:+447442539858">07442 539858</a></li>
+            <li><span>Email</span><a href="mailto:info@wellingboroughdrivingacademy.com">info@wellingboroughdrivingacademy.com</a></li>
+            <li><span>Visit</span><a href="https://www.google.com/maps/search/?api=1&amp;query=45+Broad+Green+Wellingborough+NN8+4LH">45 Broad Green, Wellingborough NN8 4LH</a></li>
+          </ul>
         </div>
-        <div class="coupon__right" data-ui>
-          <label class="sr-only" for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" placeholder="Your name…" autocomplete="name" required>
-          <label class="sr-only" for="f-phone">Phone number</label>
-          <input id="f-phone" name="phone" type="tel" placeholder="Phone number…" autocomplete="tel" required>
-          <label class="sr-only" for="f-email">Email (optional)</label>
-          <input id="f-email" name="email" type="email" placeholder="Email (optional)…" autocomplete="email" spellcheck="false">
-          <label class="sr-only" for="f-car">Manual or automatic</label>
-          <select id="f-car" name="car">
-            <option>Manual (Corsa)</option>
-            <option>Automatic (Mini Electric)</option>
-            <option>Not sure yet</option>
-          </select>
-          <button class="coupon__submit" type="submit">Send booking request</button>
-          <p class="coupon__error" data-coupon-error role="alert" hidden>Please add your name and a phone number so we can call you back.</p>
-        </div>
-      </form>
-
-      <div class="visit">
-        <div class="visit__text">
-          <h2 class="h2">Find us</h2>
-          <p class="visit__addr">45 Broad Green<br>Wellingborough<br>NN8 4LH</p>
-          <p><a class="sign__link" href="https://www.google.com/maps/search/?api=1&query=45+Broad+Green+Wellingborough+NN8+4LH">Directions in Google Maps</a></p>
-        </div>
-        <iframe class="visit__map" title="Map showing 45 Broad Green, Wellingborough NN8 4LH" loading="lazy"
-                src="https://www.google.com/maps?q=45+Broad+Green,+Wellingborough+NN8+4LH&z=16&output=embed"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <form class="form" data-coupon action="mailto:info@wellingboroughdrivingacademy.com" method="post" enctype="text/plain" novalidate>
+          <label class="field"><span>Your name</span><input name="name" type="text" autocomplete="name" placeholder="e.g. Sam Taylor…" required></label>
+          <label class="field"><span>Phone number</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 07700 900123…" required></label>
+          <label class="field"><span>Email <em>(optional)</em></span><input name="email" type="email" autocomplete="email" spellcheck="false" placeholder="you@example.com…"></label>
+          <label class="field"><span>Which car?</span>
+            <select name="car"><option>Manual (Corsa)</option><option>Automatic (Mini Electric)</option><option>Not sure yet</option></select>
+          </label>
+          <p class="form__error" data-coupon-error role="alert" hidden>Please add your name and a phone number so we can call you back.</p>
+          <button class="btn btn--brand btn--lg btn--block" type="submit">Send booking request</button>
+        </form>
       </div>
+      <iframe class="map" title="Map showing 45 Broad Green, Wellingborough NN8 4LH" loading="lazy"
+              src="https://www.google.com/maps?q=45+Broad+Green,+Wellingborough+NN8+4LH&amp;z=16&amp;output=embed"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
-
   </main>
 
-  <!-- FOOTER: the back of the sign -->
-  <footer class="back" aria-labelledby="back-h">
-    <div class="back__panel">
-      <div class="back__left">
-        <h2 id="back-h" class="back__signoff">See you on the road</h2>
-        <p>Patient, friendly, punctual instruction from a Wellingborough school that has done this since 1977.</p>
-        <p>WADDIA members, working to the DVSA ADI Code of Practice.</p>
-      </div>
-      <div class="back__right">
-        <img class="back__stamp" src="img/broad-green-1977-tall.webp" width="351" height="439" loading="lazy" alt="">
-        <ul class="back__lines">
-          <li><a href="tel:+441933226682">Office 01933 226682</a></li>
-          <li><a href="tel:+447442539858">Mobile 07442 539858</a></li>
-          <li><a href="mailto:info@wellingboroughdrivingacademy.com">info@wellingboroughdrivingacademy.com</a></li>
-          <li><a href="https://www.facebook.com/WellingboroughDrivingAcademy">Facebook</a></li>
-        </ul>
-      </div>
-      <p class="back__imprint">© Wellingborough Driving Academy, 45 Broad Green, Wellingborough NN8 4LH. Concept design by Tommaso Sarracino.</p>
+  <footer class="footer">
+    <div class="footer__inner">
+      <a class="brand brand--light" href="#top"><span class="brand__mark" aria-hidden="true">L</span><span class="brand__name" translate="no">Wellingborough<br>Driving Academy</span></a>
+      <p>Patient, friendly, punctual driving lessons in Wellingborough since 1977.</p>
+      <ul>
+        <li><a href="tel:+441933226682">01933 226682</a></li>
+        <li><a href="mailto:info@wellingboroughdrivingacademy.com">info@wellingboroughdrivingacademy.com</a></li>
+        <li><a href="https://www.facebook.com/WellingboroughDrivingAcademy">Facebook</a></li>
+      </ul>
     </div>
+    <p class="footer__imprint">© Wellingborough Driving Academy · 45 Broad Green, Wellingborough NN8 4LH · Concept design by Tommaso Sarracino</p>
   </footer>
 
+  <a class="fab" href="tel:+441933226682" aria-label="Call Wellingborough Driving Academy on 01933 226682">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+    <span>Call</span>
+  </a>
+
   <script src="main.js" defer></script>
+  <script type="module" src="sign3d.js"></script>
 </body>
 </html>
